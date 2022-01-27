@@ -57,7 +57,7 @@
 
     <script>
       const images = [
-        "./images/avocad.jpeg",
+        "./images/avocado.jpeg",
         "./images/pancake.jpeg",
         "./images/sandwich.jpeg",
         "./images/spaghetti.jpeg",
@@ -67,10 +67,27 @@
 
       //init element
       const imgEl = document.querySelector("img");
+      const nextBtn = document.getElementById("next-button");
+      const prevBtn = document.getElementById("prev-button");
 
-      //back to the image
+      //addevent
+      nextBtn.addEventListener("click", function () {
+        if (currentIndex < images.length - 1) {
+          currentIndex++;
+        } else if (currentIndex >= 3) {
+          currentIndex = 0;
+        }
+        imgEl.src = images[currentIndex];
+      });
 
-      //next to the image
+      prevBtn.addEventListener("click", function () {
+        if (currentIndex === 0) {
+          currentIndex = images.length - 1;
+        } else if (currentIndex >= 0) {
+          currentIndex--;
+        }
+        imgEl.src = images[currentIndex];
+      });
     </script>
   </body>
 </html>
