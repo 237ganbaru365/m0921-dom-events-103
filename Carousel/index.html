@@ -46,6 +46,19 @@
         top: 25%;
         right: 25%;
       }
+
+      .lookBtn {
+        display: flex;
+        justify-content: space-between;
+        width: 100px;
+        margin: 10px auto;
+      }
+      .lookBtn > p {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        border: 0.5px solid black;
+      }
     </style>
   </head>
   <body>
@@ -53,8 +66,8 @@
       <img src="./images/avocado.jpeg" alt="img01" />
       <button id="prev-button"><</button>
       <button id="next-button">></button>
+      <div class="lookBtn"></div>
     </div>
-
     <script>
       const images = [
         "./images/avocado.jpeg",
@@ -63,14 +76,27 @@
         "./images/spaghetti.jpeg",
       ];
 
+      //default
       let currentIndex = 0;
 
       //init element
       const imgEl = document.querySelector("img");
       const nextBtn = document.getElementById("next-button");
       const prevBtn = document.getElementById("prev-button");
+      const lookBtn = document.querySelector(".lookBtn");
 
-      //addevent
+      //make dots
+      const arrDots = [];
+      for (let i = 0; i < images.length; i++) {
+        const p = document.createElement("p");
+        lookBtn.appendChild(p);
+        p.classList.add(i);
+        arrDots.push(p);
+      }
+      //dots default
+      arrDots[currentIndex].style.backgroundColor = "black";
+
+      //next event
       nextBtn.addEventListener("click", function () {
         if (currentIndex < images.length - 1) {
           currentIndex++;
@@ -78,8 +104,25 @@
           currentIndex = 0;
         }
         imgEl.src = images[currentIndex];
+        toggleDots(currentIndex);
+        imgEl.animate(
+          [
+            {
+              opacity: 0,
+              transform: "translateX(50px)",
+            },
+            {
+              opacity: 1,
+              transform: "translateX(0)",
+            },
+          ],
+          {
+            duration: 500,
+          }
+        );
       });
 
+      //prev event
       prevBtn.addEventListener("click", function () {
         if (currentIndex === 0) {
           currentIndex = images.length - 1;
@@ -87,7 +130,31 @@
           currentIndex--;
         }
         imgEl.src = images[currentIndex];
+        toggleDots(currentIndex);
+        imgEl.animate(
+          [
+            {
+              opacity: 0,
+              transform: "translateX(-50px)",
+            },
+            {
+              opacity: 1,
+              transform: "translateX(0)",
+            },
+          ],
+          {
+            duration: 500,
+          }
+        );
       });
+
+      //dots func
+      const toggleDots = (index) => {
+        for (let i = 0; i < images.length; i++) {
+          arrDots[i].style.backgroundColor = "white";
+        }
+        arrDots[index].style.backgroundColor = "black";
+      };
     </script>
   </body>
 </html>
